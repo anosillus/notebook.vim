@@ -22,29 +22,6 @@ function! vimpyter#insertPythonBlock()
   exec 'normal!O'
 endfunction
 
-" Asynchronously starts notebook loader for original file
-function! s:startNotebook(notebook_loader, flags)
-  " Different async commands have to be issued for nvim/vim
-  if has('nvim')
-    call jobstart(a:notebook_loader . ' ' . a:flags . ' ' .
-          \ b:original_file)
-  else
-    call job_start(a:notebook_loader . ' ' . a:flags . ' ' .
-          \ b:original_file)
-  endif
-endfunction
-
-function! vimpyter#startJupyter()
-  call s:startNotebook('jupyter notebook', g:vimpyter_jupyter_notebook_flags)
-  call s:colorEcho('Started Jupyter notebook', 'jupyter')
-endfunction
-
-" CAN BE BUGGY, SEE NTERACT ISSUE: https://github.com/nteract/nteract/issues/2582
-function! vimpyter#startNteract()
-  call s:startNotebook('nteract', g:vimpyter_nteract_flags)
-  call s:colorEcho('Started Nteract app', 'nteract')
-endfunction
-
 " Update jupyter notebook when saving buffer
 function! vimpyter#updateNotebook()
   " Updating notebook for neovim (another function for vim, line 53)
@@ -60,8 +37,7 @@ function! vimpyter#updateNotebook()
   "Set the last updated file flag (job_id in case of neovim)
   "(see function below: vimpyter#notebookUpdatesFinished())
   let g:vimpyter_internal_last_save_flag = jobstart(
-        \ 'notedown --from markdown --to notebook ' . b:proxy_file .
-        \ ' > ' . b:original_file,
+        \ 'ipynb-py-convert ' . b:proxy_file . ' ' . b:original_file,
         \ {
         \  'on_exit': function('s:updateSuccessNeovim')
         \ })
@@ -80,8 +56,7 @@ function! vimpyter#updateNotebook()
     "Set the last updated file flag (string in case of vim, see documentation)
     "(see function below: vimpyter#notebookUpdatesFinished())
     let l:command = [&shell, &shellcmdflag,
-          \ 'notedown --from markdown --to notebook ' .
-          \ b:proxy_file . ' > ' . b:original_file]
+          \ 'ipynb-py-convert ' . b:proxy_file . ' ' . b:original_file]
     let g:vimpyter_internal_last_save_flag = job_start(
           \ l:command, {'exit_cb': function('s:updateSuccessVim')})
   endfunction
@@ -120,8 +95,7 @@ function! vimpyter#createView()
   let l:proxy_file = g:vimpyter_view_directory . '/' . l:proxy_buffer_name
 
   " Transform json to markdown and save the result in proxy
-  call system('notedown --to markdown ' . l:original_file .
-        \ ' > ' . l:proxy_file)
+  call system('ipynb-py-convert ' . l:original_file . ' ' . l:proxy_file)
 
   " Open proxy file
   silent execute 'edit' l:proxy_file

@@ -4,8 +4,8 @@ if exists('g:loaded_vimpyter_plugin_dont_use_this_flag_elsewhere')
 endif
 
 " Is notedown executable present?
-if !executable('notedown')
-  echom 'notedown executable is required in order for vimpyter.vim to work. '
+if !executable('ipynb-py-convert')
+  echom 'ipynb-py-convert executable is required in order for vimpyter.vim to work. '
         \ . 'Check whether you have needed dependencies installed in README.md'
   finish
 endif
