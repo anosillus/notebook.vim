@@ -4,8 +4,8 @@ if exists('g:loaded_vimpyter_plugin_dont_use_this_flag_elsewhere')
 endif
 
 " Is notedown executable present?
-if !executable('ipynb-py-convert')
-  echom 'ipynb-py-convert executable is required in order for vimpyter.vim to work. '
+if !executable('notedown')
+  echom 'notedown executable is required in order for vimpyter.vim to work. '
         \ . 'Check whether you have needed dependencies installed in README.md'
   finish
 endif
@@ -51,22 +51,22 @@ endif
 let g:vimpyter_buffer_names = {}
 
 " DEFINE COMMANDS
-command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()
-command! -nargs=0 VimpyterStartNteract call vimpyter#startNteract()
-command! -nargs=0 VimpyterUpdate call vimpyter#updateNotebook()
+command! -nargs=0 VimpyterStartJupyter call ipyedit#startJupyter()
+command! -nargs=0 VimpyterStartNteract call ipyedit#startNteract()
+command! -nargs=0 VimpyterUpdate call ipyedit#updateNotebook()
 
-command! -nargs=0 VimpyterInsertPythonBlock call vimpyter#insertPythonBlock()
+command! -nargs=0 VimpyterInsertPythonBlock call ipyedit#insertPythonBlock()
 
 " DEFINE AUTOCOMMANDS
 augroup VimpyterAutoCommands
     au!
 
     " If new/existing file opened, create view for it at the beginning
-    autocmd BufReadPost *.ipynb call vimpyter#createView()
-    autocmd BufNewFile *.ipynb call vimpyter#createView()
+    autocmd BufReadPost *.ipynb call ipyedit#createView()
+    autocmd BufNewFile *.ipynb call ipyedit#createView()
     " If view was saved transfer the changes from proxy to original file
     autocmd BufWritePost *.ipynb :VimpyterUpdate
-    autocmd VimLeavePre *.ipynb call vimpyter#notebookUpdatesFinished()
+    autocmd VimLeavePre *.ipynb call ipyedit#notebookUpdatesFinished()
 
 augroup END
 

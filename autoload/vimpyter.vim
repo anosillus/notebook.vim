@@ -15,15 +15,38 @@ function! s:colorEcho(message, highlight_group)
   endif
 endfunction
 
-" Insert python block recognized by notedown
-function! vimpyter#insertPythonBlock()
-  exec 'normal!i```{.python .input}'
-  exec 'normal!o```'
-  exec 'normal!O'
-endfunction
+" " Insert python block recognized by notedown
+" function! ipyedit#insertPythonBlock()
+"   exec 'normal!i```{.python .input}'
+"   exec 'normal!o```'
+"   exec 'normal!O'
+" endfunction
+
+" " Asynchronously starts notebook loader for original file
+" function! s:startNotebook(notebook_loader, flags)
+"   " Different async commands have to be issued for nvim/vim
+"   if has('nvim')
+"     call jobstart(a:notebook_loader . ' ' . a:flags . ' ' .
+"          \ b:original_file)
+"   else
+"     call job_start(a:notebook_loader . ' ' . a:flags . ' ' .
+"          \ b:original_file)
+"   endif
+" endfunction
+"
+" function! ipyedit#startJupyter()
+"   call s:startNotebook('jupyter notebook', g:vimpyter_jupyter_notebook_flags)
+"   call s:colorEcho('Started Jupyter notebook', 'jupyter')
+" endfunction
+"
+" " CAN BE BUGGY, SEE NTERACT ISSUE: https://github.com/nteract/nteract/issues/2582
+" function! ipyedit#startNteract()
+"   call s:startNotebook('nteract', g:vimpyter_nteract_flags)
+"   call s:colorEcho('Started Nteract app', 'nteract')
+" endfunction
 
 " Update jupyter notebook when saving buffer
-function! vimpyter#updateNotebook()
+function! ipyedit#updateNotebook()
   " Updating notebook for neovim (another function for vim, line 53)
   function! s:updateNotebookNeovim()
     function! s:updateSuccessNeovim(job_id, data, event)
@@ -35,9 +58,10 @@ function! vimpyter#updateNotebook()
     endfunction
 
   "Set the last updated file flag (job_id in case of neovim)
-  "(see function below: vimpyter#notebookUpdatesFinished())
+  "(see function below: ipyedit#notebookUpdatesFinished())
   let g:vimpyter_internal_last_save_flag = jobstart(
-        \ 'ipynb-py-convert ' . b:proxy_file . ' ' . b:original_file,
+        \ 'ipynb-py-convert ' . b:proxy_file .
+        \ '  ' . b:original_file,
         \ {
         \  'on_exit': function('s:updateSuccessNeovim')
         \ })
@@ -54,9 +78,10 @@ function! vimpyter#updateNotebook()
     endfunction
 
     "Set the last updated file flag (string in case of vim, see documentation)
-    "(see function below: vimpyter#notebookUpdatesFinished())
+    "(see function below: ipyedit#notebookUpdatesFinished())
     let l:command = [&shell, &shellcmdflag,
-          \ 'ipynb-py-convert ' . b:proxy_file . ' ' . b:original_file]
+          \ 'ipynb-py-convert ' .
+          \ b:proxy_file . ' ' . b:original_file]
     let g:vimpyter_internal_last_save_flag = job_start(
           \ l:command, {'exit_cb': function('s:updateSuccessVim')})
   endfunction
@@ -70,7 +95,7 @@ function! vimpyter#updateNotebook()
 endfunction
 
 "Create view by notedown in /tmp directory with specified filename
-function! vimpyter#createView()
+function! ipyedit#createView()
   "Checks if buffer of this name already exists.
   "If it does, returns the name of buffer with appropriate number appended
   "Otherwise returns buffer name
@@ -92,10 +117,11 @@ function! vimpyter#createView()
   " Proxies are named accordingly to %:t:r (with appended number for
   " replicating names) (see documentation for more informations)
   let l:proxy_buffer_name = s:checkNameExistence(expand('%:t:r'))
-  let l:proxy_file = g:vimpyter_view_directory . '/' . l:proxy_buffer_name
+  let l:proxy_file = g:vimpyter_view_directory . '/' . l:proxy_buffer_name . '.py'
 
   " Transform json to markdown and save the result in proxy
-  call system('ipynb-py-convert ' . l:original_file . ' ' . l:proxy_file)
+  call system('ipynb-py-convert ' . l:original_file .
+        \ ' ' . l:proxy_file)
 
   " Open proxy file
   silent execute 'edit' l:proxy_file
@@ -112,7 +138,7 @@ function! vimpyter#createView()
 endfunction
 
 " Close vim/nvim only if all updates finished
-function! vimpyter#notebookUpdatesFinished()
+function! ipyedit#notebookUpdatesFinished()
   if has('nvim')
     " infinite loop waiting for last update to finish
     while jobwait([g:vimpyter_internal_last_save_flag]) != [-3]
@@ -129,6 +155,6 @@ function! vimpyter#notebookUpdatesFinished()
 endfunction
 
 " Mostly for debugging purposes, prints original file path
-function! vimpyter#getOriginalFile()
+function! ipyedit#getOriginalFile()
   echo 'Proxy points to: ' . b:original_file
 endfunction
