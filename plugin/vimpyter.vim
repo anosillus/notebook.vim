@@ -1,3 +1,6 @@
+let s:save_cpo = &cpoptions
+set cpoptions&vim
+
 " Check if plugin already loaded, don't use this variable elsewhere
 if exists('g:loaded_vimpyter_plugin_dont_use_this_flag_elsewhere')
     finish
@@ -51,23 +54,27 @@ endif
 let g:vimpyter_buffer_names = {}
 
 " DEFINE COMMANDS
-command! -nargs=0 VimpyterStartJupyter call ipyedit#startJupyter()
-command! -nargs=0 VimpyterStartNteract call ipyedit#startNteract()
-command! -nargs=0 VimpyterUpdate call ipyedit#updateNotebook()
+command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()
+command! -nargs=0 VimpyterStartNteract call vimpyter#startNteract()
+command! -nargs=0 VimpyterUpdate call vimpyter#updateNotebook()
+command! -nargs=0 VimpyterInsertPythonBlock call vimpyter#insertPythonBlock()
 
-command! -nargs=0 VimpyterInsertPythonBlock call ipyedit#insertPythonBlock()
 
 " DEFINE AUTOCOMMANDS
 augroup VimpyterAutoCommands
-    au!
-
-    " If new/existing file opened, create view for it at the beginning
-    autocmd BufReadPost *.ipynb call ipyedit#createView()
-    autocmd BufNewFile *.ipynb call ipyedit#createView()
-    " If view was saved transfer the changes from proxy to original file
-    autocmd BufWritePost *.ipynb :VimpyterUpdate
-    autocmd VimLeavePre *.ipynb call ipyedit#notebookUpdatesFinished()
+	au!
+	" if expand('%:e') == 'ipynb'
+		" let b:ipynb_enable = 1
+	" endif
+	" If new/existing file opened, create view for it at the beginning
+	autocmd BufReadPost *.ipynb call vimpyter#createView()
+	autocmd BufNewFile *.ipynb call vimpyter#createView()
+	" If view was saved transfer the changes from proxy to original file
+	autocmd BufWritePost *.py :VimpyterUpdate
+	autocmd VimLeavePre *.py call vimpyter#notebookUpdatesFinished()
 
 augroup END
 
 " }}}
+
+let &cpoptions = s:save_cpo
