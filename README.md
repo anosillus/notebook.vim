@@ -1,8 +1,8 @@
 # Vim-ipynb
 
 - 　This is fork of [szymonmaszke/vimpyter](https://github.com/szymonmaszke/vimpyter).
-- 　This plugin enable vim to open ipynb as Python file.
-- 　After you edit ipynb file as Python file, your file would be save as ipynb file.
+- 　This fork enable us to open ipynb as Python file in vim.
+- 　After you edit ipynb file as Python file, your edit would be save as ipynb file.
 
 ## Installation
 
