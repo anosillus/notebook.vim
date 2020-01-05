@@ -12,10 +12,6 @@
 
 - 　**[ipynb-py-convert](https://github.com/kiwi0fruit/ipynb-py-convert)**
 
-　Install plugin using plugin manager like **[vim-plug](https://github.com/junegunn/vim-plug)** or **[Vundle](https://github.com/VundleVim/Vundle.vim)**:
-
-　If you want to use different plugin manager/direct installation please do refer to their respective repositories/documentation.
-
 ## Configuration
 
 - 　**g:vimpyter_view_directory**: directory where proxy files are created (default: `$TMP`)
