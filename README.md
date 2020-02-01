@@ -22,17 +22,22 @@
 
 ## Known bugs
 
-　When you use `:wq` command, preventing your file saving failed, vim sleeps 1 seconds. (It can be fixed later. https://github.com/dense-analysis/ale can work well.)
+　When you use `:wq` command, preventing your file saving failed, vim sleeps 1 seconds. (It can be fixed later. [ALE](https://github.com/dense-analysis/ale) is working well too.)
 
 ## ToDo
-  ### 1. Multi Kernel support.
+  ### 1. fix `:wq` support.
+  ### 2. `$TMP` dir change.
+  ### 3. change API name.
+  If you install vimpyter at same time. Some trouble can be happen.       
+  ### 4. Multi Kernel support.
   I will make my own python plugin. Not ipynb-py-convert for other kernel.
   [other Kernel list](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels)
-  ### 2. Syntastics Support
+  ### 5. Syntastics Support
    The target is sql and R in python. I will use [context_filetype.vim](https://github.com/Shougo/context_filetype.vim)
-   ## 
-  ### 3. Exceclution Support
+  ### 6. Exceclution Support
   If I add this, The excecution style like [Nvim-R](https://github.com/jalvesaq/Nvim-R) or [jupyter-vim](https://github.com/wmvanvliet/jupyter-vim)
   Now I am using browser for plot execution or use [quickrun](https://github.com/thinca/vim-quickrun) for easy test.
   But if some user need this function, I will try to add it.
   This function would be strongly relating with multi Kernel support.
+
+## I am welcome pull requests and issue.
