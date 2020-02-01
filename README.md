@@ -39,4 +39,4 @@
   But if some user need this function, I will try to add it.
   This function would be strongly relating with multi Kernel support.
 
-## I am welcome pull requests and issue.
+## I am welcome pull requests and issue, questions.
