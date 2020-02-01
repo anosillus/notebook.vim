@@ -30,8 +30,7 @@
   ### 3. change API name.
   If you install vimpyter at same time. Some trouble can be happen.       
   ### 4. Multi Kernel support.
-  I will make my own python plugin. Not ipynb-py-convert for other kernel.
-  [other Kernel list](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels)
+  I will make my own python plugin. Not ipynb-py-convert for [other kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels)
   ### 5. Syntastics Support
    The target is sql and R in python. I will use [context_filetype.vim](https://github.com/Shougo/context_filetype.vim)
   ### 6. Exceclution Support
