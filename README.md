@@ -34,7 +34,7 @@
   ### 5. Syntastics Support
    The target is sql and R in python. I will use [context_filetype.vim](https://github.com/Shougo/context_filetype.vim)
   ### 6. Exceclution Support
-  If I add this, the excecution style is like [Nvim-R](https://github.com/jalvesaq/Nvim-R) or [jupyter-vim].(https://github.com/wmvanvliet/jupyter-vim)
+  If I add this, the excecution style is like [Nvim-R](https://github.com/jalvesaq/Nvim-R) or [jupyter-vim](https://github.com/wmvanvliet/jupyter-vim).  
   Now I am using browser for plot execution or use [quickrun](https://github.com/thinca/vim-quickrun) for easy test.
   But if some user need this function, I will try to add it.
   This function would be strongly relating with multi Kernel support.
