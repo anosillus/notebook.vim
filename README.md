@@ -21,8 +21,8 @@
 　Ipynb file would be opened as Python file. You can use python plugins.
 
 ## Known bugs
-
-　When you use `:wq` command, preventing your file saving failed, vim sleeps 1 seconds. (It can be fixed later. [ALE](https://github.com/dense-analysis/ale) is working well too.)
+I recommend you not to use `:wq`. if you take too much time to update file, your data update failed. 
+When you use `:wq` command, preventing your file saving failed, vim sleeps 1 seconds. (It can be fixed later. [ALE](https://github.com/dense-analysis/ale) is working well too.)
 
 ## ToDo
   ### 1. fix `:wq` support.
