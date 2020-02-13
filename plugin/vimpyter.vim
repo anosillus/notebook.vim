@@ -7,8 +7,8 @@ if exists('g:loaded_vimpyter_plugin_dont_use_this_flag_elsewhere')
 endif
 
 " Is notedown executable present?
-if !executable('notedown')
-  echom 'notedown executable is required in order for vimpyter.vim to work. '
+if !executable('ipynb-py-convert')
+  echom 'ipynb-py-convert executable is required in order for vimpyter.vim to work. '
         \ . 'Check whether you have needed dependencies installed in README.md'
   finish
 endif
@@ -52,13 +52,6 @@ else
 endif
 
 let g:vimpyter_buffer_names = {}
-
-" DEFINE COMMANDS
-command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()
-command! -nargs=0 VimpyterStartNteract call vimpyter#startNteract()
-command! -nargs=0 VimpyterUpdate call vimpyter#updateNotebook()
-command! -nargs=0 VimpyterInsertPythonBlock call vimpyter#insertPythonBlock()
-
 
 " DEFINE AUTOCOMMANDS
 augroup VimpyterAutoCommands
