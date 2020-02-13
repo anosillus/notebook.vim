@@ -21,7 +21,7 @@
 　Ipynb file would be opened as Python file. You can use python plugins.
 
 ## Known bugs
-### 1. mounted file couldn't edited.
+### 1. jupyter mounted file couldn't edited.
 When you open one file in jupyter and vim at same time, the file is mounted by jupyter. 
 So vim edited history coludn't upadate.
 Please close the file in brower.
