@@ -34,8 +34,8 @@ endif
 let g:loaded_vimpyter_plugin_dont_use_this_flag_elsewhere = 1
 
 " Parse user defined flags for notebook loaders
-let g:vimpyter_jupyter_notebook_flags = get(g:, 'vimpyter_jupyter_notebook_flags', '')
-let g:vimpyter_nteract_flags = get(g:, 'vimpyter_nteract_flags', '')
+" let g:vimpyter_jupyter_notebook_flags = get(g:, 'vimpyter_jupyter_notebook_flags', '')
+" let g:vimpyter_nteract_flags = get(g:, 'vimpyter_nteract_flags', '')
 let g:vimpyter_view_directory = get(g:, 'vimpyter_view_directory', $TMPDIR)
 
 " Parse configuration for colorful display of text in cmdline
@@ -53,18 +53,23 @@ endif
 
 let g:vimpyter_buffer_names = {}
 
+" DEFINE COMMANDS
+" command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()
+" command! -nargs=0 VimpyterStartNteract call vimpyter#startNteract()
+command! -nargs=0 VimpyterUpdate call vimpyter#updateNotebook()
+
+" command! -nargs=0 VimpyterInsertPythonBlock call vimpyter#insertPythonBlock()
+
 " DEFINE AUTOCOMMANDS
 augroup VimpyterAutoCommands
-	au!
-	" if expand('%:e') == 'ipynb'
-		" let b:ipynb_enable = 1
-	" endif
-	" If new/existing file opened, create view for it at the beginning
-	autocmd BufReadPost *.ipynb call vimpyter#createView()
-	autocmd BufNewFile *.ipynb call vimpyter#createView()
-	" If view was saved transfer the changes from proxy to original file
-	autocmd BufWritePost *.py :VimpyterUpdate
-	autocmd VimLeavePre *.py call vimpyter#notebookUpdatesFinished()
+  autocmd!
+  " If new/existing file opened, create view for it at the beginning
+  " autocmd BufRead,BufNewFile *.ipynb let g:ipynbvim_working = 1
+  autocmd BufReadPost *.ipynb call vimpyter#createView()
+  autocmd BufNewFile *.ipynb call vimpyter#createView()
+  " If view was saved transfer the changes from proxy to original file
+  autocmd BufWritePost *.py if get(b:, 'ipynb_on', 0) is 1 | call vimpyter#updateNotebook() | endif
+  autocmd VimLeavePre  *.py if get(b:, 'ipynb_on', 0) is 1 | call vimpyter#notebookUpdatesFinished() | endif
 
 augroup END
 

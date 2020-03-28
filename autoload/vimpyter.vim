@@ -61,7 +61,7 @@ function! vimpyter#createView()
     if has_key(g:vimpyter_buffer_names, a:name)
       let l:buffer_name = g:vimpyter_buffer_names[a:name]
       let g:vimpyter_buffer_names[a:name] = l:buffer_name + 1
-      return a:name . string(l:buffer_name) . '.'
+      return a:name . string(l:buffer_name) . '.py'
     else
       let g:vimpyter_buffer_names[a:name] = 0
       return a:name . '.py'
@@ -86,6 +86,8 @@ function! vimpyter#createView()
   " Save references to proxy file and the original
   let b:original_file = l:original_file
   let b:proxy_file = l:proxy_file
+  let b:ipynb_on = 1
+
 
   " Close original file (it won't be edited directly)
   silent execute ':bd' l:original_file
@@ -96,14 +98,10 @@ endfunction
 
 " Close vim/nvim only if all updates finished
 function! vimpyter#notebookUpdatesFinished()
-	if !exists('b:proxy_file')
-		echo 'hello'
-		return
-	endif
-
   if has('nvim')
     " infinite loop waiting for last update to finish
     while jobwait([g:vimpyter_internal_last_save_flag]) != [-3]
+      echo 'Waiting vim-ipynb...'
     endwhile
   else
     " Vim asynchronous API returns string instead of job_id (WHY?!)
@@ -111,10 +109,10 @@ function! vimpyter#notebookUpdatesFinished()
     if g:vimpyter_internal_last_save_flag !=? ''
       " infinite loop waiting for last update to finish
       while job_status(g:vimpyter_internal_last_save_flag) !~? 'dead'
-				sleep
 				echo 'Updating as ipynb...'
       endwhile
     endif
   endif
-	sleep
+  call system('rm ' . b:proxy_file)
+
 endfunction
