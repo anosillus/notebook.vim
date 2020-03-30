@@ -26,7 +26,7 @@ When you open one file in jupyter and vim at same time, the file is mounted by j
 So vim edited history coludn't upadate.
 Please close the file in brower.
 
-### 2. `:wq` bug.
+### 2. ~`:wq` bug.~(Solved)
 I recommend you not to use `:wq`.   
 If you take too much time to updating file, your data can be lost.(I'm think this situation is caused by #1 error.)  
 When you use `:wq` command, preventing your file saving failed, vim sleeps 1 seconds. But it is not enough.  
