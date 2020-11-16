@@ -28,7 +28,7 @@ Please close the file in brower.
 
 ### 2. ~`:wq` bug.~(Solved)
 I recommend you not to use `:wq`.   
-If you take too much time to updating file, your data can be lost.(I'm think this situation is caused by #1 error.)  
+If you take too much time to updating file, your data can be lost.(I think this situation is caused by #1 error.)  
 When you use `:wq` command, preventing your file saving failed, vim sleeps 1 seconds. But it is not enough.  
 It can be fixed later. [ALE](https://github.com/dense-analysis/ale) has solved this issue.
 
@@ -38,7 +38,7 @@ It can be fixed later. [ALE](https://github.com/dense-analysis/ale) has solved t
   ### 3. change API name.
   If you install vimpyter at same time. Some trouble can be happen.       
   ### 4. Multi Kernel support.
-  I will make my own python plugin and not depending ipynb-py-convert for [other kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels)
+  I will make my own python plugin which doesn't depend on ipynb-py-convert for dealing with [other kernels ](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels)
   ### 5. Syntastics Support
    The target is sql and R in python. I will use [context_filetype.vim](https://github.com/Shougo/context_filetype.vim)
   ### 6. Exceclution Support
