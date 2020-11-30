@@ -22,7 +22,7 @@
 
 ## Known bugs
 ### 1. jupyter mounted file couldn't edited.
-When you open one file in jupyter and vim at same time, the file is mounted by jupyter. 
+When you open one file in jupyter and vim at same time, the file would be mounted by jupyter. 
 So vim edited history coludn't upadate.
 Please close the file in brower.
 
