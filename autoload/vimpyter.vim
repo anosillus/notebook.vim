@@ -74,7 +74,7 @@ function! vimpyter#createView()
   let l:original_dir = substitute(expand('%:p:h'), '\ ', '\\ ', 'g')
   " Proxies are named accordingly to %:t:r (with appended number for
   " replicating names) (see documentation for more informations)
-  let l:proxy_file_name = '.ipynb_tmp.' . expand('%:t:r')
+  let l:proxy_file_name =  expand('%:t:r') . '.ipynb_tmp'
   let l:proxy_buffer_name = s:checkNameExistence(l:proxy_file_name)
   if g:vimpyter_use_current_dir
     let l:proxy_file = l:original_dir . '/' . l:proxy_buffer_name
@@ -120,6 +120,14 @@ function! vimpyter#notebookUpdatesFinished()
       endwhile
     endif
   endif
+  
+  " Close proxy buffers before leave
+  for proxy_file in g:vimpyter_proxy_files
+    if bufwinnr(proxy_file) != -1
+      execute ':bw' proxy_file
+    endif
+  endfor
+
   call system('rm ' . join(g:vimpyter_proxy_files, ' '))
 
 endfunction
