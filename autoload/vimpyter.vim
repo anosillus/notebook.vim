@@ -61,10 +61,10 @@ function! vimpyter#createView()
     if has_key(g:vimpyter_buffer_names, a:name)
       let l:buffer_name = g:vimpyter_buffer_names[a:name]
       let g:vimpyter_buffer_names[a:name] = l:buffer_name + 1
-      return a:name . string(l:buffer_name) . '.py~'
+      return a:name . string(l:buffer_name) . '.py'
     else
       let g:vimpyter_buffer_names[a:name] = 0
-      return a:name . '.py~'
+      return a:name . '.py'
     endif
     return ''
   endfunction
@@ -74,7 +74,8 @@ function! vimpyter#createView()
   let l:original_dir = substitute(expand('%:p:h'), '\ ', '\\ ', 'g')
   " Proxies are named accordingly to %:t:r (with appended number for
   " replicating names) (see documentation for more informations)
-  let l:proxy_buffer_name = s:checkNameExistence(expand('%:t:r'))
+  let l:proxy_file_name = "~$" . expand('%:t:r')
+  let l:proxy_buffer_name = s:checkNameExistence(l:proxy_file_name)
   if g:vimpyter_use_current_dir
     let l:proxy_file = l:original_dir . '/' . l:proxy_buffer_name
   else
