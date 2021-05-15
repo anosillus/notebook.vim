@@ -91,6 +91,7 @@ function! vimpyter#createView()
 	let b:ipynb_mode = 1
   " Save references to proxy file and the original
   let b:original_file = l:original_file
+  let b:proxy_file = l:proxy_file
   call add(g:vimpyter_proxy_files, l:proxy_file)
   let b:ipynb_on = 1
 
