@@ -53,6 +53,7 @@ else
 endif
 
 let g:vimpyter_buffer_names = {}
+let g:vimpyter_proxy_files = []
 
 " DEFINE COMMANDS
 " command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()
@@ -70,7 +71,7 @@ augroup VimpyterAutoCommands
   autocmd BufNewFile *.ipynb call vimpyter#createView()
   " If view was saved transfer the changes from proxy to original file
   autocmd BufWritePost *.py if get(b:, 'ipynb_on', 0) is 1 | call vimpyter#updateNotebook() | endif
-  autocmd VimLeavePre  *.py if get(b:, 'ipynb_on', 0) is 1 | call vimpyter#notebookUpdatesFinished() | endif
+  autocmd VimLeavePre  * call vimpyter#notebookUpdatesFinished()
 
 augroup END
 
