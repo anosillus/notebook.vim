@@ -96,7 +96,7 @@ function! vimpyter#createView()
 
 
   " Close original file (it won't be edited directly)
-  silent execute ':bd' l:original_file
+  silent execute ':bw' l:original_file
 
   " SET FILETYPE TO ipynb
   set filetype=python
@@ -119,7 +119,7 @@ function! vimpyter#notebookUpdatesFinished()
       endwhile
     endif
   endif
-  execute ':bd' b:proxy_file
+  execute ':bw' b:proxy_file
   call system('rm ' . b:proxy_file)
 
 endfunction
