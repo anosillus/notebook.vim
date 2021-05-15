@@ -75,7 +75,7 @@ function! vimpyter#createView()
   " Proxies are named accordingly to %:t:r (with appended number for
   " replicating names) (see documentation for more informations)
   let l:proxy_file_name = '~$' . expand('%:t:r')
-  let l:proxy_buffer_name = substitute(s:checkNameExistence(l:proxy_file_name), '~$', '\~\$', 'g')
+  let l:proxy_buffer_name = substitute(s:checkNameExistence(l:proxy_file_name), '\~\$', '\\~\\$', 'g')
   if g:vimpyter_use_current_dir
     let l:proxy_file = l:original_dir . '/' . l:proxy_buffer_name
   else
