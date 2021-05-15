@@ -123,8 +123,9 @@ function! vimpyter#notebookUpdatesFinished()
   
   " Close proxy buffers before leave
   for proxy_file in g:vimpyter_proxy_files
-    if bufwinnr(proxy_file) != -1
-      execute ':bw' proxy_file
+    let bufwinnr = bufnr(proxy_file)
+    if bufwinnr != -1
+      execute 'bw ' . bufnr
     endif
   endfor
 
