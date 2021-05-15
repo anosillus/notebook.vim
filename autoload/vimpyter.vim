@@ -119,7 +119,6 @@ function! vimpyter#notebookUpdatesFinished()
       endwhile
     endif
   endif
-  execute ':bw' b:proxy_file
   call system('rm ' . b:proxy_file)
 
 endfunction
