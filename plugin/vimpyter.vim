@@ -37,6 +37,7 @@ let g:loaded_vimpyter_plugin_dont_use_this_flag_elsewhere = 1
 " let g:vimpyter_jupyter_notebook_flags = get(g:, 'vimpyter_jupyter_notebook_flags', '')
 " let g:vimpyter_nteract_flags = get(g:, 'vimpyter_nteract_flags', '')
 let g:vimpyter_view_directory = get(g:, 'vimpyter_view_directory', $TMPDIR)
+let g:vimpyter_use_current_dir = get(g:, 'vimpyter_use_current_dir', 1)
 
 " Parse configuration for colorful display of text in cmdline
 let g:vimpyter_color = get(g:, 'vimpyter_color', 0)
@@ -52,6 +53,7 @@ else
 endif
 
 let g:vimpyter_buffer_names = {}
+let g:vimpyter_proxy_files = []
 
 " DEFINE COMMANDS
 " command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()
@@ -69,7 +71,7 @@ augroup VimpyterAutoCommands
   autocmd BufNewFile *.ipynb call vimpyter#createView()
   " If view was saved transfer the changes from proxy to original file
   autocmd BufWritePost *.py if get(b:, 'ipynb_on', 0) is 1 | call vimpyter#updateNotebook() | endif
-  autocmd VimLeavePre  *.py if get(b:, 'ipynb_on', 0) is 1 | call vimpyter#notebookUpdatesFinished() | endif
+  autocmd VimLeavePre  * call vimpyter#notebookUpdatesFinished()
 
 augroup END
 

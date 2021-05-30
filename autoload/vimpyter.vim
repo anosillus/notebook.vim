@@ -71,10 +71,16 @@ function! vimpyter#createView()
 
   " Save original file path and create path to proxy
   let l:original_file = substitute(expand('%:p'), '\ ', '\\ ', 'g')
+  let l:original_dir = substitute(expand('%:p:h'), '\ ', '\\ ', 'g')
   " Proxies are named accordingly to %:t:r (with appended number for
   " replicating names) (see documentation for more informations)
-  let l:proxy_buffer_name = s:checkNameExistence(expand('%:t:r'))
-  let l:proxy_file = g:vimpyter_view_directory . '/' . l:proxy_buffer_name
+  let l:proxy_file_name =  expand('%:t:r') . '.ipynb_tmp'
+  let l:proxy_buffer_name = s:checkNameExistence(l:proxy_file_name)
+  if g:vimpyter_use_current_dir
+    let l:proxy_file = l:original_dir . '/' . l:proxy_buffer_name
+  else
+    let l:proxy_file = g:vimpyter_view_directory . '/' . l:proxy_buffer_name
+  endif
 
   " Transform json to markdown and save the result in proxy
 	call system('ipynb-py-convert ' . l:original_file .
@@ -86,11 +92,12 @@ function! vimpyter#createView()
   " Save references to proxy file and the original
   let b:original_file = l:original_file
   let b:proxy_file = l:proxy_file
+  call add(g:vimpyter_proxy_files, l:proxy_file)
   let b:ipynb_on = 1
 
 
   " Close original file (it won't be edited directly)
-  silent execute ':bd' l:original_file
+  silent execute ':bw' l:original_file
 
   " SET FILETYPE TO ipynb
   set filetype=python
@@ -113,6 +120,15 @@ function! vimpyter#notebookUpdatesFinished()
       endwhile
     endif
   endif
-  call system('rm ' . b:proxy_file)
+  
+  " Close proxy buffers before leave
+  for proxy_file in g:vimpyter_proxy_files
+    let bufnr = bufnr(proxy_file)
+    if bufnr != -1
+      execute 'bw ' . bufnr
+    endif
+  endfor
+
+  call system('rm ' . join(g:vimpyter_proxy_files, ' '))
 
 endfunction
