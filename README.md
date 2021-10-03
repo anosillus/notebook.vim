@@ -22,8 +22,8 @@
 
 ## Known bugs
 ### 1. you cann't edit jupyter mounted file.
-When you open one file in jupyter and vim at same time, the file would be mounted by jupyter. 
-So vim edited history coludn't upadate.
+When you open one file in jupyter and vim at same time, the file is mounted by jupyter. 
+So vim can't update with your edited history.
 Please close the file in brower.
 
 ### 2. ~`:wq` bug.~(Solved)
