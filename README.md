@@ -2,8 +2,8 @@
 I rarely write python in jupyter notebook anymore and do very little development now.
 I don't know much about recent development, but I'm sure there are good projects out there if you look for them, and I think lua is easier to write in now.
 
-## issue
-When saving or updating a edited file, if the destination file is referenced by another program(like jupyter file opend by browser), it may behave strangely over ownership. I think that is the only concern in this project.
+## This program's issue (For further development)
+When saving/updating an edited file, if the file being saved to is referenced by another program (such as when a jupyter file being edited is open in Chrome), it may behave strangely due to ownership. I think that is the only concern with this project.
 
 # Vim-ipynb
 
