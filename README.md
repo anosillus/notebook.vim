@@ -1,3 +1,10 @@
+# Not developping
+I rarely write python in jupyter notebook anymore and do very little development now.
+I don't know much about recent development, but I'm sure there are good projects out there if you look for them, and I think lua is easier to write in now.
+
+## issue
+When saving a file, if the destination file is referenced by another program, it may behave strangely over ownership. I think that is the only concern in this project.
+
 # Vim-ipynb
 
 - 　This is fork of [szymonmaszke/vimpyter](https://github.com/szymonmaszke/vimpyter).
